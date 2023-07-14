@@ -12,6 +12,10 @@
   },
   "homepage": "https://github.com/ByronStewart/DapperJS#readme",
   "workspaces": [
-    "packages/sql-builder"
-  ]
+    "packages/sql-builder",
+    "packages/mysql"
+  ],
+  "devDependencies": {
+    "mysql2": "^3.5.1"
+  }
 }

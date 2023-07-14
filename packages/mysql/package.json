@@ -1,0 +1,21 @@
+{
+  "name": "mysql",
+  "version": "1.0.0",
+  "description": "Mysql wrapper",
+  "main": "examples/examples.js",
+  "type": "module",
+  "dependencies": {
+    "mysql2": "^3.5.1"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ByronStewart/DapperJS.git"
+  },
+  "author": "Byron Stewart",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ByronStewart/DapperJS/issues"
+  },
+  "homepage": "https://github.com/ByronStewart/DapperJS#readme"
+}
