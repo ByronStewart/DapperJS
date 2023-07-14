@@ -1,5 +1,5 @@
 import {describe, test, expect} from 'vitest';
-import {SqlBuilder} from '/src/SqlBuilder.js';
+import {SqlBuilder} from '../src/SqlBuilder.js';
 
 
 describe('sqlbuilder tests', () => {

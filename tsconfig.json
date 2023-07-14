@@ -10,7 +10,7 @@
     "allowSyntheticDefaultImports": true
   },
     "include": [
-      "src/**/*"
+      "packages/sql-builder/src/**/*"
     ],
     "exclude": [
     "node_modules"

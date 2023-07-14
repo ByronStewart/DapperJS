@@ -1,7 +1,11 @@
 {
-  "name": "dapperjs",
+  "name": "sql-builder",
   "version": "1.0.0",
-  "description": "Dapper port to JS",
+  "description": "A sql builder library",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ByronStewart/DapperJS.git"
@@ -11,7 +15,7 @@
     "url": "https://github.com/ByronStewart/DapperJS/issues"
   },
   "homepage": "https://github.com/ByronStewart/DapperJS#readme",
-  "workspaces": [
-    "packages/sql-builder"
-  ]
+  "devDependencies": {
+    "vitest": "^0.33.0"
+  }
 }
