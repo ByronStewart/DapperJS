@@ -1,20 +1,25 @@
 export class SqlBuilder {
 
     #template = '';
-
     /** @type {string[]} */
     #params = [];
-
     /** @type {Map<string, Clauses>} */
     data = new Map();
 
+    get rawSql() {
+        return this.#template;
+    }
+
+    get params() {
+        return this.#params;
+    }
 
     /**
      * @param params {object?}
      * @param sql {string}
      */
     addTemplate(sql, params) {
-        return new Template(this, sql, params)
+        return new Template(this, sql, params);
     }
 
     /**
@@ -24,7 +29,7 @@ export class SqlBuilder {
      * @returns {SqlBuilder}
      */
     where(sql, params = null) {
-       return this.#addClause("where", sql, params, " AND ", "WHERE ", "\n")
+        return this.#addClause("where", sql, params, " AND ", "WHERE ", "\n");
     }
 
     /**
@@ -34,7 +39,7 @@ export class SqlBuilder {
      * @returns {SqlBuilder}
      */
     orderBy(sql, params) {
-        return this.#addClause("orderby", sql, params, ", ", "ORDER BY ", "\n")
+        return this.#addClause("orderby", sql, params, ", ", "ORDER BY ", "\n");
     }
 
     /**
@@ -47,21 +52,13 @@ export class SqlBuilder {
      * @param postfix {string}
      */
     #addClause(name, sql, params, joiner, prefix = "", postfix = "") {
-        let clauses = this.data.get(name)
+        let clauses = this.data.get(name);
         if (!clauses) {
-            clauses = new Clauses(joiner, prefix, postfix)
-            this.data.set(name, clauses)
+            clauses = new Clauses(joiner, prefix, postfix);
+            this.data.set(name, clauses);
         }
-        clauses.add({sql, params})
+        clauses.add({sql, params});
         return this;
-    }
-
-    get rawSql() {
-        return this.#template;
-    }
-
-    get params() {
-        return this.#params;
     }
 }
 
@@ -76,9 +73,7 @@ class Template {
     #resolved = false;
     #rawSql = "";
 
-
     /**
-     *
      * @param builder {SqlBuilder}
      * @param sql {string}
      * @param params {object | null}
@@ -94,7 +89,7 @@ class Template {
      */
     get rawSql() {
         if (!this.#resolved) {
-            this.#resolveSql()
+            this.#resolveSql();
         }
         return this.#rawSql;
     }
@@ -105,15 +100,15 @@ class Template {
      */
     get params() {
         if (!this.#resolved) {
-            this.#resolveSql()
+            this.#resolveSql();
         }
-        return this.#params
+        return this.#params;
     }
 
     #resolveSql() {
         let rawSql = this.#template;
         for (const [name, clauses] of this.#builder.data) {
-            rawSql = rawSql.replace(`/**${name}**/`, clauses.resolve(this.#params))
+            rawSql = rawSql.replace(`/**${name}**/`, clauses.resolve(this.#params));
         }
         this.#rawSql = rawSql;
         this.#resolved = true;
@@ -121,18 +116,23 @@ class Template {
 
 }
 
-class Clauses {
-    /** @type {import("./SqlBuilder").Clause[]} */
-    #data = [];
+/**
+ * @typedef {object} Clause
+ * @property sql {string}
+ * @property params {object | null}
+ */
 
+class Clauses {
+    /** @type {Clause[]} */
+    #data = [];
     /** @type {string} */
     #joiner;
     /** @type {string} */
     #prefix;
     /** @type {string} */
     #postfix;
+
     /**
-     *
      * @param joiner {string}
      * @param prefix {string}
      * @param postfix {string}
@@ -142,23 +142,23 @@ class Clauses {
         this.#postfix = postfix;
         this.#joiner = joiner;
     }
+
     /**
-     *
-     * @param clause {import("./SqlBuilder").Clause}
+     * @param clause {Clause}
      */
     add(clause) {
-        this.#data.push(clause)
+        this.#data.push(clause);
     }
+
     /**
-     *
      * @param parameters {object}
      * @returns {string}
      */
     resolve(parameters) {
         for (const item of this.#data) {
-            Object.assign(parameters, item.params)
+            Object.assign(parameters, item.params);
         }
-        return this.#prefix + this.#data.map(x => x.sql).join(this.#joiner) + this.#postfix
+        return this.#prefix + this.#data.map(x => x.sql).join(this.#joiner) + this.#postfix;
     }
 }
 
